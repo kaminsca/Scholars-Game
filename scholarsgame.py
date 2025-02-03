@@ -3,6 +3,7 @@ from hand_functions import function_dict
 
 def get_turn_inputs(cur, opp):
     # get hand to use
+    #TODO: skip prompt if one hand dead
     hand_ind = int(input(f"Use left ({cur.left.number}) or right ({cur.right.number}) hand with 0 or 1: "))
     hand = cur.right if hand_ind else cur.left
     hand.print_actions()
@@ -24,6 +25,17 @@ def get_turn_inputs(cur, opp):
         target = [opp.left, opp.right]
     return action_function, hand, target
 
+def end_game_check(player1, player2, turns):
+    if not player1.left.alive and not player1.right.alive:
+        print("\n--- Game Over ---")
+        print(f"Congrats Player 2 for winning after {turns} turns!")
+        return True
+    if not player2.left.alive and not player2.right.alive:
+        print("\n--- Game Over ---")
+        print(f"Congrats Player 1 for winning after {turns} turns!")
+        return True
+    return False
+
 def play_game(player1, player2):
     turn = 0
     while player1.alive and player2.alive:
@@ -44,8 +56,12 @@ def play_game(player1, player2):
         except ValueError as e:
             print(f"Error: {e}. Please try again.")
             continue
-
-        # will have to handle this as a list too 
+            
+        # check status:
+        if end_game_check(player1, player2, turn):
+            return
+        
+        # update
         if isinstance(target, list):
             for targ in target:
                 targ.set_actions()
@@ -57,4 +73,3 @@ def play_game(player1, player2):
 
 if __name__ == '__main__':
     play_game(Player(), Player())
-    print('hello')

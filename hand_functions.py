@@ -19,10 +19,10 @@ def cut(hand, target_hand):
         target_hand.number = 5
         target_hand.state = 1
         return 1
-    if not (target_hand.number == 4 and target_hand.state == 0):
+    if not ((target_hand.number == 4 and target_hand.state == 0) or (target_hand.number == 5 and target_hand.state == 0)):
         raise ValueError("invalid target")
     target_hand.kill_hand()
-    return
+    return 1
 
 def double_plumb(hand, target_hands):
     # 2 or 3 scissors beats two rocks
@@ -36,8 +36,8 @@ def double_plumb(hand, target_hands):
 def double_cut(hand, target_hands):
     # 3 cuts two papers, two ones, or a mix at once
     for targ in target_hands:
-        if not (targ.number == 5 and targ.state == 1) or (targ.number == 4 and targ.state == 0):
-            raise ValueError("invalid target")
+        if not ((targ.number == 1) or (targ.number == 5 and targ.state == 0) or (targ.number == 4 and targ.state == 0)):
+            raise ValueError(f"Invalid target: {targ.number}, state {targ.state}")
     for targ in target_hands:
         if targ.number == 1:
             targ.number = 5
@@ -56,7 +56,7 @@ def paper(hand, target_hand):
 
 def rock(hand, target_hand):
     # 5 rock beats any scissors
-    if not target_hand.number == 2 or target_hand.number == 3 or (target_hand.number == 4 and target_hand.state == 1):
+    if not (target_hand.number == 2 or target_hand.number == 3 or (target_hand.number == 4 and target_hand.state == 1)):
         raise ValueError("invalid target")
     target_hand.kill_hand()
     return
