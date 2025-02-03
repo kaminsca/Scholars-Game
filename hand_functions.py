@@ -61,7 +61,7 @@ def rock(hand, target_hand):
     target_hand.kill_hand()
     return
 
-def swap_state(hand):
+def swap_state(hand, target_hand):
     # 4 swaps between paper and scissors
     # 5 swaps between rock and paper
     if hand.number == 4 or hand.number == 5:
