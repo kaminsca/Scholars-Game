@@ -12,9 +12,11 @@ class Hand:
         self.set_actions()
         
     def set_actions(self):
+        #TODO: only show valid moves given current state
         number = self.number
         state = self.state
         self.actions = ['Add']
+        self.actions.append('Redistribute')
         if number == 1:
             self.actions.append('Plumb')
         elif number == 2:

@@ -19,6 +19,8 @@ def get_turn_inputs(cur, opp):
     action_key = hand.actions[action_ind]
     action = function_dict[action_key]
     action_function = action[0]
+    
+    #TODO: redistribute has special prompt and target case
 
     # determine the number of targets
     num_targets = action[1]
@@ -82,9 +84,7 @@ def play_game(player1, player2):
                 targ.set_actions()
         else:
             target.set_actions()
-
         turn += 1
-
 
 if __name__ == '__main__':
     play_game(Player(), Player())

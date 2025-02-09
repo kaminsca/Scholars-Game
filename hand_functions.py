@@ -1,5 +1,6 @@
 # Functions
 def add(hand, target_hand):
+    #TODO: have player select state when reaching 4 or 5
     target_hand.number = (target_hand.number + hand.number - 1) % 5 + 1
     return 1
 
@@ -69,6 +70,19 @@ def swap_state(hand, target_hand):
         return 1
     raise ValueError("invalid target")
 
+def redistribute(new_vals, hands):
+    left_val = hands[0].number
+    right_val = hands[1].number
+    if new_vals[0] < 1 or new_vals[1] < 1:
+        raise ValueError("Invalid redistribution, values must be between 1-5")
+    if sum(new_vals) != left_val + right_val:
+        raise ValueError("Invalid redistribution, hands do not add up to the previous sum") 
+    if new_vals[0] == left_val or new_vals[0] == right_val:
+        raise ValueError("Invalid redistribution, no state change")
+    # passes all checks, set to new values
+    hands[0].number = new_vals[0]
+    hands[1].number = new_vals[1]
+
 # key: function name, value: (function, number of targets) 
 function_dict = {
     'Add': (add, 1),
@@ -79,5 +93,6 @@ function_dict = {
     'Double Cut': (double_cut, 2),
     'Paper': (paper, 1),
     'Rock': (rock, 1),
-    'Swap State': (swap_state, 0)
+    'Swap State': (swap_state, 0),
+    'Redistribute': (redistribute, 2)
 }
