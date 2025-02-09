@@ -1,61 +1,6 @@
 from player import *
 from hand_functions import function_dict
 
-def get_turn_inputs(cur, opp):
-    # get hand to use
-    # skip prompt if one hand dead 
-    if not cur.left.alive:
-        hand = cur.right
-        print(f"Using right ({cur.right.number}).")
-    elif not cur.right.alive:
-        hand = cur.left
-        print(f"Using left ({cur.left.number}).")
-    else:
-        index = int(input(f"Use left ({cur.left.number}) hand with [0], right ({cur.right.number}) hand with [1], or redistribute your hands with [2]: "))
-        if index == 2:
-            # redistribute
-            new_vals = redistribution()
-            return function_dict['Redistribute'][0], new_vals, [cur.left, cur.right]
-        else:
-            hand = cur.right if index else cur.left
-    hand.print_actions()
-    # get action
-    action_ind = int(input("Choose an action: "))
-    action_key = hand.actions[action_ind]
-    action = function_dict[action_key]
-    action_function = action[0]
-    
-    # determine the number of targets
-    num_targets = action[1]
-    if num_targets == 0:
-        target = None
-    if num_targets == 1:
-        # skip prompt if one hand dead 
-        if not opp.left.alive:
-            target = opp.right
-            print(f"On opponent's right ({opp.right.number}).")
-        elif not opp.right.alive:
-            target = opp.left
-            print(f"On opponent's left ({opp.left.number}).")
-        else:
-            opp_hand_ind = int(input(f"On opponent's left ({opp.left.number}) or right ({opp.right.number}) hand with 0 or 1: "))
-            target = opp.right if opp_hand_ind else opp.left
-    elif num_targets == 2:
-        #TODO: let the user pick their own hands, check alive status of hands
-        target = [opp.left, opp.right]
-    return action_function, hand, target
-
-def redistribution():
-    user_input = input("Input two numbers to redistribute your hands' values: ")
-    vals = []
-    for letter in user_input:
-        if letter.isdigit():
-            vals.append(letter)
-    new_left = int(vals[0])
-    new_right = int(vals[1])
-
-    return [new_left, new_right]
-
 def end_game_check(player1, player2, turns):
     if not player1.left.alive and not player1.right.alive:
         print("\n--- Game Over ---")
@@ -81,7 +26,8 @@ def play_game(player1, player2):
         print('Opponent: ', end="")
         opp.print_player()
         
-        func, hand, target = get_turn_inputs(cur, opp)
+        # func, hand, target = get_turn_inputs(cur, opp)
+        func, hand, target = cur.choose_action(cur, opp)
         try:
             func(hand, target)
         except ValueError as e:
