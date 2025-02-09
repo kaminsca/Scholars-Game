@@ -73,15 +73,24 @@ def swap_state(hand, target_hand):
 def redistribute(new_vals, hands):
     left_val = hands[0].number
     right_val = hands[1].number
-    if new_vals[0] < 1 or new_vals[1] < 1:
+    if new_vals[0] < 0 or new_vals[1] < 0 or new_vals[0] > 5 or new_vals[1] > 5:
         raise ValueError("Invalid redistribution, values must be between 1-5")
     if sum(new_vals) != left_val + right_val:
         raise ValueError("Invalid redistribution, hands do not add up to the previous sum") 
     if new_vals[0] == left_val or new_vals[0] == right_val:
         raise ValueError("Invalid redistribution, no state change")
     # passes all checks, set to new values
-    hands[0].number = new_vals[0]
-    hands[1].number = new_vals[1]
+    # if redistributing to 0 (rock), set number to 5 and state to 1
+    if new_vals[0] == 0:
+        hands[0].number = 5
+        hands[0].state = 1
+    else:
+        hands[0].number = new_vals[0]
+    if new_vals[1] == 0:
+        hands[1].number = 5
+        hands[1].state = 1
+    else:
+        hands[1].number = new_vals[1]
 
 # key: function name, value: (function, number of targets) 
 function_dict = {

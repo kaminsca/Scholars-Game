@@ -16,7 +16,7 @@ class Hand:
         number = self.number
         state = self.state
         self.actions = ['Add']
-        self.actions.append('Redistribute')
+        # self.actions.append('Redistribute')
         if number == 1:
             self.actions.append('Plumb')
         elif number == 2:
