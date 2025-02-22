@@ -1,5 +1,6 @@
 from player import *
 from hand_functions import function_dict
+from hand_images.hand_ascii import *
 
 def end_game_check(player1, player2, turns):
     if not player1.left.alive and not player1.right.alive:
@@ -48,4 +49,6 @@ def play_game(player1, player2):
 
 if __name__ == '__main__':
     # play_game(Player(), Player())
-    play_game(Player(), CPU())
+    # play_game(Player(), CPU())
+    # print (R5P)
+    print(combine_hands(L1, R5P))
