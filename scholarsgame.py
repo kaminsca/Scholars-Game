@@ -47,4 +47,5 @@ def play_game(player1, player2):
         turn += 1
 
 if __name__ == '__main__':
-    play_game(Player(), Player())
+    # play_game(Player(), Player())
+    play_game(Player(), CPU())

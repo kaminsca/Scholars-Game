@@ -1,5 +1,6 @@
 from hand import *
 from hand_functions import function_dict
+import random
 
 class Player:
     def __init__(self):
@@ -99,11 +100,65 @@ class Player:
 
         return [new_left, new_right]
 
-#TODO: finish creating CPU, move choosing actions from scholarsgame.py into here
+#TODO: finish creating CPU's choose action and redistribution
 class CPU(Player):
     def __init__(self):
         super().__init__()
         self.cpu = True
     
     def choose_action(self, cur, opp):
-        return 1
+        if not cur.left.alive:
+            hand = cur.right
+        elif not cur.right.alive:
+            hand = cur.left
+        else:
+            # cpu chooses action at random - left, right, or redistribution
+            # disable redistribution if sum is either 9 or 10
+            if cur.left.number + cur.right.number > 8:
+                index = random.randint(0,1)
+            else:
+                index = random.randint(0,2)
+            # redistribute
+            if index == 2:
+                new_vals = self.redistribution()
+                print(f"Redistributing to {new_vals[0]}, {new_vals[1]}")
+                return function_dict['Redistribute'][0], new_vals, [cur.left, cur.right]
+            else:
+                hand = cur.right if index else cur.left
+        
+        # pick random action from hand possibilities
+        action_name = hand.actions[random.randint(0, len(hand.actions) - 1)]
+        action = function_dict[action_name]
+        func = action[0]
+        # pick target of action
+        num_targets = action[1]
+        if num_targets == 0:
+            target = None
+        if num_targets == 1:
+            # skip prompt if one hand dead 
+            if not opp.left.alive:
+                target = opp.right
+            elif not opp.right.alive:
+                target = opp.left
+            else:
+                target = opp.right if random.randint(0,1) else opp.left
+        elif num_targets == 2:
+            #TODO: let the CPU pick their own hands, check alive status of hands
+            target = [opp.left, opp.right]
+        
+        print(action_name)
+        return func, hand, target
+    
+    def redistribution(self):
+        sum = self.left.number + self.right.number
+        # pick random number between 0 and sum of hands, keep trying until passes validation
+        while(1):
+            new_left = random.randint(0, sum) # inclusive
+            new_right = sum - new_left
+            if new_left < 0 or new_right < 0 or new_left > 5 or new_right > 5:
+                continue
+            elif sum != new_left + new_right:
+                continue
+            elif new_left == self.left.number or new_left == self.right.number:
+                continue
+            return [new_left, new_right]
