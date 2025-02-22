@@ -26,6 +26,7 @@ def play_game(player1, player2):
         print('Opponent: ', end="")
         opp.print_player()
 
+        opp.print_hands_upside_down()
         cur.print_hands()
         
         # func, hand, target = get_turn_inputs(cur, opp)
@@ -52,3 +53,4 @@ if __name__ == '__main__':
     # play_game(Player(), Player())
     play_game(Player(), CPU())
     # print(combine_hands(L2, R3))
+    # print(empty)

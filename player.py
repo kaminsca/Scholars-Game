@@ -14,6 +14,7 @@ class Player:
         self.right = Hand(1,0)
         self.alive = True
         self.cpu = False
+        self.color = bcolors.BOLD
 
     def print_choices(self):
         choices = set()
@@ -52,7 +53,22 @@ class Player:
         print('\n')
 
     def print_hands(self):
-        print(combine_hands(hands_map[f"L{self.left.number}{self.left.state}"], hands_map[f"R{self.right.number}{self.right.state}"]))
+        if not self.left.alive:
+            print(self.color + hands_map[f"R{self.right.number}{self.right.state}"])
+            print(bcolors.ENDC)
+        elif not self.right.alive:
+            print(self.color + combine_hands(empty, hands_map[f"L{self.left.number}{self.left.state}"]))
+            print(bcolors.ENDC)
+        else:
+            print(self.color + combine_hands(hands_map[f"L{self.left.number}{self.left.state}"], hands_map[f"R{self.right.number}{self.right.state}"]) + bcolors.ENDC)
+
+    def print_hands_upside_down(self):
+        if not self.left.alive:
+            print(self.color + flip_upside_down(hands_map[f"R{self.right.number}{self.right.state}"] + bcolors.ENDC))
+        elif not self.right.alive:
+            print(self.color +  combine_and_flip(empty, hands_map[f"L{self.left.number}{self.left.state}"] + bcolors.ENDC))
+        else:
+            print(self.color + combine_and_flip(hands_map[f"L{self.left.number}{self.left.state}"], hands_map[f"R{self.right.number}{self.right.state}"]) + bcolors.ENDC)
 
     def choose_action(self, cur, opp):
         # get hand to use
@@ -114,6 +130,8 @@ class CPU(Player):
     def __init__(self):
         super().__init__()
         self.cpu = True
+        self.color = bcolors.FAIL
+
     
     def choose_action(self, cur, opp):
         if not cur.left.alive:

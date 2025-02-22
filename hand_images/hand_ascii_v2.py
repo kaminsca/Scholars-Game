@@ -1,3 +1,59 @@
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
+empty = "\n".join([" " * 80] * 80)
+empty = """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
+
 L1 = """                                                                  **            
                                                                 **+++*          
                                                               #***+++*          
@@ -288,7 +344,7 @@ L5R = """                                            #****
 ************#                                                                   
 **********#%                                                                    """
 
-plumb = """                                                                                                    
+plumb_ascii = """                                                                                                    
                                                                                                #=---
                                                                                         ===--:::::--
                                                                                    +-:::::----==++**
@@ -327,6 +383,15 @@ R5R = "\n".join(line[::-1] for line in L5R.splitlines())
 
 def combine_hands(l, r):
     return "\n".join(f"{original}  |  {flipped}" for original, flipped in zip(l.splitlines(), r.splitlines()))
+
+def flip_upside_down(ascii_art):
+    return "\n".join(reversed(ascii_art.splitlines()))
+
+def combine_and_flip(l, r):
+    l_flipped = flip_upside_down(l)
+    r_flipped = flip_upside_down(r)
+    
+    return combine_hands(l_flipped, r_flipped)
 
 
 hands_map = {

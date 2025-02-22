@@ -1,7 +1,16 @@
+LOW_RES = False
+if LOW_RES: 
+    from hand_images.hand_ascii_lowres import *
+else:
+    from hand_images.hand_ascii_v2 import *
+
+
 # Functions
 def add(hand, target_hand):
     #TODO: have player select state when reaching 4 or 5
     target_hand.number = (target_hand.number + hand.number - 1) % 5 + 1
+    if target_hand.number < 4:
+        target_hand.state = 0
     return 1
 
 def test():
@@ -12,6 +21,7 @@ def plumb(hand, target_hand):
     if target_hand.number != 5 or target_hand.state != 1:
         raise ValueError("invalid target")
     target_hand.kill_hand()
+    print(plumb_ascii)
     return 1
 
 def cut(hand, target_hand):
