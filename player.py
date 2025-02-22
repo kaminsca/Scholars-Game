@@ -2,6 +2,12 @@ from hand import *
 from hand_functions import function_dict
 import random
 
+LOW_RES = False
+if LOW_RES: 
+    from hand_images.hand_ascii_lowres import *
+else:
+    from hand_images.hand_ascii_v2 import *
+
 class Player:
     def __init__(self):
         self.left = Hand(1,0)
@@ -44,6 +50,9 @@ class Player:
                 else:
                     print(' (rock)', end="")
         print('\n')
+
+    def print_hands(self):
+        print(combine_hands(hands_map[f"L{self.left.number}{self.left.state}"], hands_map[f"R{self.right.number}{self.right.state}"]))
 
     def choose_action(self, cur, opp):
         # get hand to use
