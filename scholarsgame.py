@@ -22,12 +22,14 @@ def play_game(player1, player2):
             cur = player2
             opp = player1
         print(f"\n--- {turn % 2 + 1}'s turn ---")
-        cur.print_player()
-        print('Opponent: ', end="")
-        opp.print_player()
 
-        opp.print_hands_upside_down()
-        cur.print_hands()
+        # print game state to player
+        if not cur.cpu:
+            cur.print_player()
+            print('Opponent: ', end="")
+            opp.print_player()
+            opp.print_hands_upside_down()
+            cur.print_hands()
         
         # func, hand, target = get_turn_inputs(cur, opp)
         func, hand, target = cur.choose_action(cur, opp)
@@ -50,7 +52,7 @@ def play_game(player1, player2):
         turn += 1
 
 if __name__ == '__main__':
-    # play_game(Player(), Player())
-    play_game(Player(), CPU())
+    # play_game(Player(color=bcolors.BOLD), Player(color=bcolors.OKGREEN))
+    play_game(Player(bcolors.BOLD), CPU())
     # print(combine_hands(L2, R3))
     # print(empty)

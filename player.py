@@ -9,12 +9,12 @@ else:
     from hand_images.hand_ascii_v2 import *
 
 class Player:
-    def __init__(self):
+    def __init__(self, color):
         self.left = Hand(1,0)
         self.right = Hand(1,0)
         self.alive = True
         self.cpu = False
-        self.color = bcolors.BOLD
+        self.color = color
 
     def print_choices(self):
         choices = set()
@@ -69,6 +69,7 @@ class Player:
             print(self.color +  combine_and_flip(empty, hands_map[f"L{self.left.number}{self.left.state}"] + bcolors.ENDC))
         else:
             print(self.color + combine_and_flip(hands_map[f"L{self.left.number}{self.left.state}"], hands_map[f"R{self.right.number}{self.right.state}"]) + bcolors.ENDC)
+        print("\n"*3)
 
     def choose_action(self, cur, opp):
         # get hand to use
@@ -128,9 +129,9 @@ class Player:
 #TODO: finish creating CPU's choose action and redistribution
 class CPU(Player):
     def __init__(self):
-        super().__init__()
+        super().__init__(bcolors.FAIL)
         self.cpu = True
-        self.color = bcolors.FAIL
+        # self.color = bcolors.FAIL
 
     
     def choose_action(self, cur, opp):
