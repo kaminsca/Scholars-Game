@@ -54,7 +54,6 @@ def double_cut(hand, target_hands):
         if targ.number == 1:
             targ.number = 5
             targ.state = 1
-            return 1
         else:
             targ.kill_hand()
     return
