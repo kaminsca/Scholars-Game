@@ -54,4 +54,4 @@ def play_game(player1, player2):
 
 if __name__ == '__main__':
     # play_game(Player(color=bcolors.BOLD), Player(color=bcolors.OKGREEN))
-    play_game(Player(bcolors.BOLD), CPU())
+    play_game(Player(bcolors.CYAN), CPU())

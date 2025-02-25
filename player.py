@@ -53,22 +53,24 @@ class Player:
         print('\n')
 
     def print_hands(self):
+        print(self.color)
         if not self.left.alive:
-            print(self.color + hands_map[f"R{self.right.number}{self.right.state}"])
-            print(bcolors.ENDC)
+            print(hands_map[f"R{self.right.number}{self.right.state}"])
         elif not self.right.alive:
-            print(self.color + combine_hands(empty, hands_map[f"L{self.left.number}{self.left.state}"]))
-            print(bcolors.ENDC)
+            print(combine_hands(empty, hands_map[f"L{self.left.number}{self.left.state}"]))
         else:
-            print(self.color + combine_hands(hands_map[f"L{self.left.number}{self.left.state}"], hands_map[f"R{self.right.number}{self.right.state}"]) + bcolors.ENDC)
+            print(combine_hands(hands_map[f"L{self.left.number}{self.left.state}"], hands_map[f"R{self.right.number}{self.right.state}"]))
+        print(bcolors.ENDC)
 
     def print_hands_upside_down(self):
+        print(self.color)
         if not self.left.alive:
-            print(self.color + flip_upside_down(hands_map[f"R{self.right.number}{self.right.state}"] + bcolors.ENDC))
+            print(flip_upside_down(hands_map[f"R{self.right.number}{self.right.state}"]))
         elif not self.right.alive:
-            print(self.color +  combine_and_flip(empty, hands_map[f"L{self.left.number}{self.left.state}"] + bcolors.ENDC))
+            print(combine_and_flip(empty, hands_map[f"L{self.left.number}{self.left.state}"]))
         else:
-            print(self.color + combine_and_flip(hands_map[f"L{self.left.number}{self.left.state}"], hands_map[f"R{self.right.number}{self.right.state}"]) + bcolors.ENDC)
+            print(combine_and_flip(hands_map[f"L{self.left.number}{self.left.state}"], hands_map[f"R{self.right.number}{self.right.state}"]))
+        print(bcolors.ENDC)
         print("\n"*3)
 
     def choose_action(self, cur, opp):
@@ -136,7 +138,7 @@ class Player:
 
 class CPU(Player):
     def __init__(self):
-        super().__init__(bcolors.FAIL)
+        super().__init__(bcolors.BRIGHTRED)
         self.cpu = True
     
     def choose_action(self, cur, opp):
