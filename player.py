@@ -10,8 +10,8 @@ else:
 
 class Player:
     def __init__(self, color):
-        self.left = Hand(1,0)
-        self.right = Hand(1,0)
+        self.left = Hand(self)
+        self.right = Hand(self)
         self.alive = True
         self.cpu = False
         self.color = color
@@ -125,14 +125,19 @@ class Player:
         new_right = int(vals[1])
 
         return [new_left, new_right]
+    
+    def choose_new_state(self, hand):
+        #TODO: print state with new (unchosen) hand sprite
+        if hand.number == 4:
+            # could get the wrong hand if both are 4, good enough for now
+            return int(input(f'{"Left" if self.left == 4 else "Right"} hand changed to 4.\nChoose paper [0] or scissors [1]. This will not consume a turn.'))
+        else:
+            return int(input(f'{"Left" if self.left == 5 else "Right"} hand changed to 5.\nChoose paper [0] or rock [1]. This will not consume a turn.'))
 
-#TODO: finish creating CPU's choose action and redistribution
 class CPU(Player):
     def __init__(self):
         super().__init__(bcolors.FAIL)
         self.cpu = True
-        # self.color = bcolors.FAIL
-
     
     def choose_action(self, cur, opp):
         if not cur.left.alive:
@@ -190,3 +195,6 @@ class CPU(Player):
             elif new_left == self.left.number or new_left == self.right.number:
                 continue
             return [new_left, new_right]
+
+    def choose_new_state(self, hand):
+        return random.randint(0,1)

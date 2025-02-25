@@ -7,10 +7,11 @@ else:
 
 # Functions
 def add(hand, target_hand):
-    #TODO: have player select state when reaching 4 or 5
     target_hand.number = (target_hand.number + hand.number - 1) % 5 + 1
-    if target_hand.number < 4:
-        target_hand.state = 0
+    if target_hand.number >= 4:
+        # player selects their hand state when reaching 4 or 5
+        print(target_hand)
+        target_hand.state = target_hand.player.choose_new_state(target_hand)
     return 1
 
 def test():

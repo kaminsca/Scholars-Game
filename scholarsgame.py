@@ -36,7 +36,8 @@ def play_game(player1, player2):
         try:
             func(hand, target)
         except ValueError as e:
-            print(f"Error: {e}. Please try again.")
+            if not cur.cpu:
+                print(f"Error: {e}. Please try again.")
             continue
             
         # check status:
@@ -54,5 +55,3 @@ def play_game(player1, player2):
 if __name__ == '__main__':
     # play_game(Player(color=bcolors.BOLD), Player(color=bcolors.OKGREEN))
     play_game(Player(bcolors.BOLD), CPU())
-    # print(combine_hands(L2, R3))
-    # print(empty)

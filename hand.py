@@ -4,15 +4,16 @@ class Hand:
     # state has meaning for a number of 4 or 5:
     # state 0 for hand 4 is paper, 1 is scissors
     # state 0 for hand 5 is paper, 1 is rock
-    def __init__(self, number, state):
-        self.number = number
-        self.state = state
+    def __init__(self, player):
+        self.number = 1
+        self.state = 0
         self.actions = []
         self.alive = True
+        self.player = player
         self.set_actions()
         
     def set_actions(self):
-        #TODO: only show valid moves given current state
+        #TODO: only show valid moves given other hands' state
         number = self.number
         state = self.state
         self.actions = ['Add']
@@ -32,6 +33,7 @@ class Hand:
                 self.actions.append('Cut')
             self.actions.append('Swap State')
         elif number == 5:
+            self.actions.remove('Add')
             if state == 0:
                 self.actions.append('Paper')
             else:
