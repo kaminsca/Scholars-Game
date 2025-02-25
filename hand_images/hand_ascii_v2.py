@@ -6,6 +6,7 @@ class bcolors:
     WARNING = '\033[93m'
     BRIGHTRED = '\033[91m'
     ENDC = '\033[0m'
+    DEFAULT = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
     CYAN = '\033[36m'

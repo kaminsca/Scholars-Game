@@ -65,9 +65,9 @@ class Player:
     def print_hands_upside_down(self):
         print(self.color)
         if not self.left.alive:
-            print(flip_upside_down(hands_map[f"R{self.right.number}{self.right.state}"]))
+            print(combine_and_flip(empty, hands_map[f"R{self.right.number}{self.right.state}"]))
         elif not self.right.alive:
-            print(combine_and_flip(empty, hands_map[f"L{self.left.number}{self.left.state}"]))
+            print(flip_upside_down(hands_map[f"L{self.left.number}{self.left.state}"]))
         else:
             print(combine_and_flip(hands_map[f"L{self.left.number}{self.left.state}"], hands_map[f"R{self.right.number}{self.right.state}"]))
         print(bcolors.ENDC)
